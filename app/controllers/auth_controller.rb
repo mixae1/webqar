@@ -7,7 +7,7 @@ class AuthController < ActionController::Base
 
   end
 
-  def destroy(id)
+  def destroy
 
   end
 end

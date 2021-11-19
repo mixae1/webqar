@@ -11,15 +11,15 @@ class CircuitsController < ActionController::Base
 
   end
 
-  def show(id)
+  def show
 
   end
 
-  def edit(id)
+  def edit
 
   end
 
-  def update(id)
+  def update
     case verb
     when :patch
 
@@ -30,7 +30,7 @@ class CircuitsController < ActionController::Base
     end
   end
 
-  def destroy(id)
+  def destroy
 
   end
 end
