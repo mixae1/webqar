@@ -1,0 +1,5 @@
+<ul>
+  <% @mapping_puc_to_prc.each do |mapping| %>
+    <li><%= link_to mapping[1].title, action: 'show', id: mapping[0].id %></li>
+  <% end %>
+</ul>

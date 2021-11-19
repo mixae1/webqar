@@ -1,4 +1,4 @@
-class AuthController < ActionController::Base
+class AuthController < ApplicationController
   def index
 
   end

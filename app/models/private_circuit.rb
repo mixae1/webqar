@@ -1,0 +1,3 @@
+class PrivateCircuit < ApplicationRecord
+
+end

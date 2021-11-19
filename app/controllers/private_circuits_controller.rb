@@ -1,4 +1,4 @@
-class CircuitsController < ActionController::Base
+class PrivateCircuitsController < ApplicationController
   def index
 
   end

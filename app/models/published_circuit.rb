@@ -1,0 +1,3 @@
+class PublishedCircuit < ApplicationRecord
+
+end
