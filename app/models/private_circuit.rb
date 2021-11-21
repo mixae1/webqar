@@ -5,5 +5,5 @@ class PrivateCircuit < ApplicationRecord
                 :created_at,
                 :updated_at
 
-  belongs_to :user, dependent: true
+  belongs_to :user
 end

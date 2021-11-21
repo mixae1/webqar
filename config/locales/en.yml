@@ -30,4 +30,13 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  header_nav_private_library: "Collection"
+  header_nav_published_library: "Exhibition"
+  header_nav_about: "About"
+  sfedu: "Southern Federal University" # "Южный Федеральный Университет"
+  address: "г. Ростов-на-Дону, ул. Большая Садовая, 105/42"
+  home_index_summary: "Quickly design and customize responsive quantum circuits with WebQAR, \
+the Southern Federal University open source code project, featuring Mathematical, Mechanical and Computer Science Institute."
+  signup: "Sign-up"
+  about: "About"
+  create_a_circuit: "Create a circuit"

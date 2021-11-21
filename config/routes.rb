@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  root 'home#index'
+  root to: 'home#index'
+
+  get 'home/about', to: 'about#index'
 
   get '/auth', to: 'auth#index'
   post '/auth', to: 'auth#create'
@@ -9,7 +11,6 @@ Rails.application.routes.draw do
 
   get '/users/new', to: 'users#new'
   post '/users', to: 'users#create'
-  # put '/users/:id', to: 'users#update'
 
   get '/posts', to: 'posts#index'
   get '/posts/new', to: 'posts#new'

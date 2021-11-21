@@ -3,5 +3,5 @@ class User < ApplicationRecord
                 :name,
                 :password
 
-  has_many :private_circuits, dependent: true
+  has_many :private_circuits
 end
