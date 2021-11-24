@@ -1,5 +1,13 @@
-class PrivateCircuitsController < ApplicationController
+class CircuitsController < ApplicationController
   def index
+    case params[:something]
+    when
+    ""
+    when
+    ""
+    else
+      render text: '404'
+    end
     @private_circuits_list = PrivateCircuit.readonly.all
   end
 
@@ -20,7 +28,7 @@ class PrivateCircuitsController < ApplicationController
   end
 
   def update
-    case [:method]
+    case params[:method]
     when :patch
 
     when :put
@@ -34,3 +42,4 @@ class PrivateCircuitsController < ApplicationController
 
   end
 end
+

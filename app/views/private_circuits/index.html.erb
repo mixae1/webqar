@@ -1,0 +1,5 @@
+<ul>
+  <% @private_circuits_list.each do |circuit| %>
+    <li><%= link_to circuit.title, action: 'show', id: circuit.id %></li>
+  <% end %>
+</ul>

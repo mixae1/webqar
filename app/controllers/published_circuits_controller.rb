@@ -10,10 +10,14 @@ class PublishedCircuitsController < ApplicationController
   def show
     published_circuit = PublishedCircuit.readonly.find(params[:id])
     @circuit = PrivateCircuit.readonly.find(published_circuit.circuit_id)
-    @author = User.find(@circuit.user_id).name
+    @author = User.find(@circuit.user_id).email
   end
 
-  def add
+  def create
+
+  end
+
+  def destroy
 
   end
 end

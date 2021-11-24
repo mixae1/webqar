@@ -1,36 +1,28 @@
 Rails.application.routes.draw do
+  devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   root to: 'home#index'
 
-  get 'home/about', to: 'about#index'
+  get '/about', to: 'home#about'
 
-  get '/auth', to: 'auth#index'
-  post '/auth', to: 'auth#create'
-  delete '/auth/:id', to: 'auth#destroy'
+  resources :auth, only: %i[index create destroy]
 
   get '/users/new', to: 'users#new'
   post '/users', to: 'users#create'
 
-  get '/posts', to: 'posts#index'
-  get '/posts/new', to: 'posts#new'
-  post '/posts', to: 'posts#create'
-  get '/posts/:id', to: 'posts#show'
-  get '/posts/:id/edit', to: 'posts#edit'
-  patch '/posts/:id', to: 'posts#update'
-  put '/posts/:id', to: 'posts#update'
-  delete '/posts/:id', to: 'posts#destroy'
+  resources :posts
 
-  get '/private_circuits', to: 'private_circuits#index'
-  get '/private_circuits/new', to: 'private_circuits#new'
-  post '/private_circuits', to: 'private_circuits#create'
-  get '/private_circuits/:id', to: 'private_circuits#show'
-  get '/private_circuits/:id/edit', to: 'private_circuits#edit'
-  patch '/private_circuits/:id', to: 'private_circuits#update'
-  put '/private_circuits/:id', to: 'private_circuits#update'
-  delete '/private_circuits/:id', to: 'private_circuits#destroy'
+  # get '/circuits', to: 'circuits#index'
+  # get '/circuits/new', to: 'circuits#new'
+  # post '/circuits', to: 'circuits#create'
+  # get '/circuits/:id', to: 'circuits#show'
+  # get '/circuits/:id/edit', to: 'circuits#edit'
+  # patch '/circuits/:id', to: 'circuits#update'
+  # put '/circuits/:id', to: 'circuits#update'
+  # delete '/circuits/:id', to: 'circuits#destroy'
 
-  get '/published_circuits', to: 'published_circuits#index'
-  get '/published_circuits/:id', to: 'published_circuits#show'
-  post '/published_circuits/:id', to: 'published_circuits#add'
+  resources :private_circuits
+
+  resources :published_circuits, only: %i[index show create destroy]
 end

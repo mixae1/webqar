@@ -1,9 +1,9 @@
 class CreatePosts < ActiveRecord::Migration[6.1]
   def up
     create_table :posts do |t|
-      t.references :user
-      t.string :title
-      t.text :text
+      t.belongs_to :user, null: false
+      t.string :title, null: false
+      t.text :text, null: false
       t.timestamps
     end
   end

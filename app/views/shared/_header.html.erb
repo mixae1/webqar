@@ -9,7 +9,7 @@
         <li><%= link_to "Home", {action: :index, controller: :home }, class: "nav-link px-2 text-secondary" %></li>
         <li><%= link_to t('header_nav_private_library'), private_circuits_path, class: "nav-link px-2 text-white" %></li>
         <li><%= link_to t('header_nav_published_library'), published_circuits_path, class: "nav-link px-2 text-white" %></li>
-        <li><%= link_to t('header_nav_about'), home_about_path, class: %w"nav-link px-2 text-white" %></li>
+        <li><%= link_to t('header_nav_about'), about_path, class: %w"nav-link px-2 text-white" %></li>
       </ul>
 
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -18,7 +18,7 @@
 
       <div class="text-end">
         <button type="button" class="btn btn-outline-light me-2">Login</button>
-        <button type="button" class="btn btn-warning">Sign-up</button>
+        <%= link_to t('signup'), users_new_path, class: "btn btn-warning" %>
       </div>
     </div>
   </div>
