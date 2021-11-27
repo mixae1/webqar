@@ -9,12 +9,10 @@
   <div class="col-lg-6 mx-auto">
     <p class="lead mb-4"><%= t('home_index_summary') %></p>
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-      <%= link_to users_new_path, class: "btn btn-primary btn-lg px-4 me-sm-3" do %>
-        <% if session[:auth].nil? %>
-          <%= t('signup') %>
-        <% else %>
-          <%= t('create_a_circuit') %>
-        <% end %>
+      <% if user_signed_in? %>
+        <%= link_to t('create_a_circuit'), new_private_circuit_path, class: "btn btn-primary btn-lg px-4 me-sm-3" %>
+      <% else %>
+        <%= link_to t('signup'), new_user_registration_path, class: "btn btn-primary btn-lg px-4 me-sm-3" %>
       <% end %>
       <%= link_to t('about'), about_path, class: "btn btn-outline-secondary btn-lg px-4" %>
     </div>
