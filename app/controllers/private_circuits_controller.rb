@@ -1,6 +1,6 @@
 class PrivateCircuitsController < ApplicationController
   def index
-    @private_circuits_list = PrivateCircuit.readonly.all
+    @private_circuits_list = PrivateCircuit.readonly.where(['user_id = ?', current_user.id])
   end
 
   def new
@@ -12,7 +12,7 @@ class PrivateCircuitsController < ApplicationController
   end
 
   def show
-    @circuit = PrivateCircuit.readonly.find(params[:id])
+    @circuit = PrivateCircuit.readonly.find(params[:id]);
   end
 
   def edit
