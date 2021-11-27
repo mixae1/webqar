@@ -1,6 +1,5 @@
 class PublishedCircuit < ApplicationRecord
-  attr_accessor :created_at,
-                :updated_at
 
-  has_one :private_circuit
+  belongs_to :private_circuit
+  validates :private_circuit_id, presence: true
 end

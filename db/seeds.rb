@@ -9,4 +9,4 @@
 return if User.first.present?
 admin = User.create!(email: 'mixaetel@gmail.com', password: "ssdfghjk")
 circuit = PrivateCircuit.create!(title: 'First circuit', description: 'for to test "show" of published circuits', user_id: admin.id)
-PublishedCircuit.create!(circuit_id: circuit.id)
+PublishedCircuit.create!(private_circuit_id: circuit.id)

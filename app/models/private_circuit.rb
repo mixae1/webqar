@@ -1,9 +1,6 @@
 class PrivateCircuit < ApplicationRecord
-  attr_accessor :name,
-                :description,
-                :scheme,
-                :created_at,
-                :updated_at
 
   belongs_to :user
+  validates :user_id, presence: true
+  has_one :published_circuit
 end
