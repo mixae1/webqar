@@ -1,5 +1,25 @@
-<ul>
-  <% @private_circuits_list.each do |circuit| %>
-    <li><%= link_to circuit.title, action: 'show', id: circuit.id %></li>
-  <% end %>
-</ul>
+<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+  <label class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+    <span class="fs-5 fw-semibold me-lg-auto">Collection</span>
+
+    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+      <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+    </form>
+
+  </label>
+  <div class="list-group list-group-flush border-bottom scrollarea">
+
+    <% @private_circuits_list.each do |circuit| %>
+
+      <%= link_to private_circuit_path(circuit), class: "list-group-item list-group-item-action py-3 lh-tight" do %>
+        <div class="d-flex w-100 align-items-center justify-content-between">
+          <strong class="mb-1"><%= circuit.title %></strong>
+          <small><%= circuit.user.email %></small>
+        </div>
+        <div class="col-10 mb-1 small"><%= circuit.description %></div>
+      <% end %>
+
+    <% end %>
+
+  </div>
+</div>
