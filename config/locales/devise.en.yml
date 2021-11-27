@@ -65,3 +65,4 @@ en:
         other: "%{count} errors prohibited this %{resource} from being saved:"
   succ_created_acc: "Successfully created account"
   login: "Login"
+  logout: "Log out"
