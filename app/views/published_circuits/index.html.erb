@@ -1,5 +1,25 @@
-<ul>
-  <% @mapping_puc_to_prc.each do |mapping| %>
-    <li><%= link_to mapping[1].title, action: 'show', id: mapping[0].id %></li>
-  <% end %>
-</ul>
+<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+  <label class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+    <span class="fs-5 fw-semibold me-lg-auto">Exhibition</span>
+
+    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+      <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+    </form>
+
+  </label>
+  <div class="list-group list-group-flush border-bottom scrollarea">
+
+    <% @mapping_puc_to_prc.each do |mapping| %>
+
+      <%= link_to published_circuit_path(mapping[1]), class: "list-group-item list-group-item-action py-3 lh-tight" do %>
+        <div class="d-flex w-100 align-items-center justify-content-between">
+          <strong class="mb-1"><%= mapping[1].title %></strong>
+          <small><%= mapping[1].user.email %></small>
+        </div>
+        <div class="col-10 mb-1 small"><%= mapping[1].description %></div>
+      <% end %>
+
+    <% end %>
+
+  </div>
+</div>
