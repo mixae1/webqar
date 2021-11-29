@@ -7,14 +7,11 @@ Rails.application.routes.draw do
 
   get '/about', to: 'home#about'
 
-  # get '/users/new', to: 'users#new'
-  # post '/users', to: 'users#create'
-
   resources :posts
 
-  # resources :circuits
+  resources :circuits
 
-  resources :private_circuits
-
-  resources :published_circuits, only: %i[index show create destroy]
+  get '/exhibition', to: 'circuits#public'
+  post '/circuits/:id/publish', to: 'circuits#publish'
+  post '/circuits/:id/unpublish', to: 'circuits#unpublish'
 end

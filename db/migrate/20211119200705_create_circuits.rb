@@ -1,15 +1,16 @@
-class CreatePrivateCircuits < ActiveRecord::Migration[6.1]
+class CreateCircuits < ActiveRecord::Migration[6.1]
   def up
-    create_table :private_circuits do |t|
+    create_table :circuits do |t|
       t.belongs_to :user, null: false
       t.string :title, null: false
       t.text :description
       t.text :scheme
+      t.boolean :published, null: false, default: false
       t.timestamps
     end
   end
 
   def down
-    drop_table :private_circuits
+    drop_table :circuits
   end
 end
