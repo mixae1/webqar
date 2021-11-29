@@ -1,4 +1,5 @@
 class PrivateCircuitsController < ApplicationController
+  before_action :authenticate_user!
   def index
     @private_circuits_list = PrivateCircuit.readonly.where(['user_id = ?', current_user.id])
   end
