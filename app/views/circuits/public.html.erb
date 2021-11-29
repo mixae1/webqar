@@ -9,14 +9,14 @@
   </label>
   <div class="list-group list-group-flush border-bottom scrollarea">
 
-    <% @mapping_puc_to_prc.each do |mapping| %>
+    <% @published_circuits_list.each do |circuit| %>
 
-      <%= link_to published_circuit_path(mapping[1]), class: "list-group-item list-group-item-action py-3 lh-tight" do %>
+      <%= link_to circuit_path(circuit), class: "list-group-item list-group-item-action py-3 lh-tight" do %>
         <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1"><%= mapping[1].title %></strong>
-          <small><%= mapping[1].user.email %></small>
+          <strong class="mb-1"><%= circuit.title %></strong>
+          <small><%= circuit.user.email %></small>
         </div>
-        <div class="col-10 mb-1 small"><%= mapping[1].description %></div>
+        <div class="col-10 mb-1 small"><%= circuit.description %></div>
       <% end %>
 
     <% end %>

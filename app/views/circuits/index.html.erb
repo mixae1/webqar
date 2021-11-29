@@ -11,7 +11,7 @@
 
     <% @private_circuits_list.each do |circuit| %>
 
-      <%= link_to private_circuit_path(circuit), class: "list-group-item list-group-item-action py-3 lh-tight" do %>
+      <%= link_to circuit_path(circuit), class: "list-group-item list-group-item-action py-3 lh-tight" do %>
         <div class="d-flex w-100 align-items-center justify-content-between">
           <strong class="mb-1"><%= circuit.title %></strong>
           <small><%= circuit.user.email %></small>
