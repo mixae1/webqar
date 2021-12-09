@@ -3,3 +3,9 @@
   <li>desc: <%= @circuit.description %></li>
   <li>author: <%= @circuit.user.email %></li>
 </ul>
+
+<% unless @circuit.scheme.empty? %>
+  <div id="circuit" data-scheme="<%= @circuit.scheme %>"></div>
+  <h4><%= t('result_probabilities') %>:</h4>
+  <pre><samp id="circuit-report"></samp></pre>
+<% end %>

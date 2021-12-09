@@ -11,3 +11,8 @@ import "channels"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+//import "./quantum"
+//import  Quantum  from './quantum'
+//const { Quantum } = require("../../javascript/packs/quantum");
+import './show_circuit'

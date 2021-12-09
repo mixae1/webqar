@@ -1,3 +1,7 @@
 .fw-semibold {
     font-weight: 600;
 }
+
+.no-scrolls {
+    overflow: hidden!important
+}
