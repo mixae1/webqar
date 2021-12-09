@@ -5,3 +5,9 @@
 .no-scrolls {
     overflow: hidden!important
 }
+
+.clearFix .label {
+    float: left;
+    width: 200px;
+    color: #6d7070;
+}

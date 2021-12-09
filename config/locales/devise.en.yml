@@ -67,3 +67,6 @@ en:
   login: "Login"
   logout: "Log out"
   result_probabilities: "Result probabilities"
+  description: "Description"
+  title: "Title"
+  author: "Author"

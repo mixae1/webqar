@@ -1,11 +1,16 @@
-<ul>
-  <li>title: <%= @circuit.title %></li>
-  <li>desc: <%= @circuit.description %></li>
-  <li>author: <%= @circuit.user.email %></li>
-</ul>
+<h3><%= @circuit.title %></h3>
+
+<div class="clearFix">
+  <div class="label"><%= t('description') %>:</div>
+  <div class="content"><%= @circuit.description %></div>
+</div>
+
+
+<small style="float: right; color: #777777"><%= @circuit.user.email %></small>
+
 
 <% unless @circuit.scheme.empty? %>
   <div id="circuit" data-scheme="<%= @circuit.scheme %>"></div>
-  <h4><%= t('result_probabilities') %>:</h4>
+  <h5><%= t('result_probabilities') %>:</h5>
   <pre><samp id="circuit-report"></samp></pre>
 <% end %>
