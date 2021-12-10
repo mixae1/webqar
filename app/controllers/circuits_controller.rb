@@ -1,8 +1,8 @@
 class CircuitsController < ApplicationController
   before_action :authenticate_user!, except: %i[public show]
-  before_action :set_circuit, only: %i[publish unpublish edit]
+  before_action :set_circuit, only: %i[publish unpublish edit destroy]
   before_action :set_safe_circuit, only: %i[show]
-
+  before_action :authorize_circuit, only: %i[publish unpublish edit destroy edit update]
   def index
     @private_circuits_list = Circuit.readonly.where(['user_id = ?', current_user.id])
   end
@@ -68,5 +68,9 @@ class CircuitsController < ApplicationController
 
   def circuit_params
     params.require(:circuit).permit(:title, :description, :scheme)
+  end
+
+  def authorize_circuit
+    render_404 unless current_user.id == @circuit.user.id
   end
 end
