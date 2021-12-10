@@ -35,3 +35,7 @@ document.addEventListener("gateHasBeenOperated", () => {
     if(circuit) circuit.evaluate$()
     if(reportEl) reportEl.innerText = circuit.report$()
 })
+
+document.addEventListener('submit', () => {
+    if( circuit ) document.getElementById('circuit_scheme')[0].value = circuit.toText()
+})
