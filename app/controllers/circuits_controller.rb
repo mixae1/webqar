@@ -16,7 +16,9 @@ class CircuitsController < ApplicationController
   end
 
   def create
-
+    @circuit = current_user.circuits.create(circuit_params)
+    return redirect_to new_circuit_path unless @circuit.valid?
+    redirect_to circuits_path
   end
 
   def publish
@@ -62,5 +64,9 @@ class CircuitsController < ApplicationController
   def set_circuit
     @circuit = Circuit.find_by_id(params[:id])
     render_404 unless @circuit
+  end
+
+  def circuit_params
+    params.require(:circuit).permit(:title, :description, :scheme)
   end
 end

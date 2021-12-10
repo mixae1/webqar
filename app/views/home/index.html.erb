@@ -10,11 +10,11 @@
     <p class="lead mb-4"><%= t('home_index_summary') %></p>
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
       <% if user_signed_in? %>
-        <%= link_to t('create_a_circuit'), new_circuit_path, class: "btn btn-primary btn-lg px-4 me-sm-3" %>
+        <%= link_to t('create_a_circuit'), new_circuit_url, class: "btn btn-primary btn-lg px-4 me-sm-3" %>
       <% else %>
-        <%= link_to t('signup'), new_user_registration_path, class: "btn btn-primary btn-lg px-4 me-sm-3" %>
+        <%= link_to t('signup'), new_user_registration_url, class: "btn btn-primary btn-lg px-4 me-sm-3" %>
       <% end %>
-      <%= link_to t('about'), about_path, class: "btn btn-outline-secondary btn-lg px-4" %>
+      <%= link_to t('about'), about_url, class: "btn btn-outline-secondary btn-lg px-4" %>
     </div>
   </div>
   <div class="overflow-hidden">

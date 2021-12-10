@@ -1,0 +1,26 @@
+<h2 class="mb-5">Creating</h2>
+
+<%= form_for @circuit, url: circuits_url(@circuit), method: :post do |f| %>
+
+  <div class="form-floating mb-3">
+    <%= f.text_field :title, class: "form-control w-auto p-3", id: "floatingTitle", autofocus: true, placeholder: "Title" %>
+    <label for="floatingTitle"><%= t('title') %></label>
+  </div>
+
+  <div class="form-floating mb-5">
+    <%= f.text_area :description, class: "form-control w-50 p-3", id: "floatingDescription", autofocus: true, placeholder: "Description" %>
+    <label for="floatingDescription"><%= t('description') %></label>
+  </div>
+
+  <div class='Q-circuit-palette'></div>
+  <div id="circuit" data-scheme="I-I-I-I-I!I-I-I-I-I!I-I-I-I-I"></div>
+  <h5><%= t('result_probabilities') %>:</h5>
+  <pre><samp id="circuit-report"></samp></pre>
+
+  <%= f.hidden_field :scheme %>
+
+  <%= f.submit t('create'), class: "w-auto btn btn-lg btn-primary", style: "float: right;" %>
+<% end %>
+
+
+

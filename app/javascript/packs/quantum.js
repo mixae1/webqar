@@ -4887,13 +4887,13 @@ Quantum.Circuit.createConstants(
 
 
 
-Quantum.Circuit.Editor = function(circuit, targetEl, is_toolbar_hided ) {
+Quantum.Circuit.Editor = function(circuit, targetEl, is_readonly ) {
 
 
 	//  First order of business,
 	//  we require a valid circuit.
 
-	if (circuit instanceof Quantum.Circuit !== true) circuit = new Quantum.Circuit()
+	if (!(circuit instanceof Quantum.Circuit)) circuit = new Quantum.Circuit()
 	this.circuit = circuit
 	this.index = Quantum.Circuit.Editor.index++
 
@@ -4969,7 +4969,7 @@ Quantum.Circuit.Editor = function(circuit, targetEl, is_toolbar_hided ) {
 
 
 	//  Create a toolbar for containing buttons.
-	if (!is_toolbar_hided) {
+	if (!is_readonly) {
 		const toolbarEl = createDiv()
 		circuitEl.appendChild(toolbarEl)
 		toolbarEl.classList.add('Q-circuit-toolbar')
@@ -5211,18 +5211,21 @@ Quantum.Circuit.Editor = function(circuit, targetEl, is_toolbar_hided ) {
 
 	//  Add event listeners.
 
-	circuitEl.addEventListener( 'mousedown',  Quantum.Circuit.Editor.onPointerPress )
-	circuitEl.addEventListener( 'touchstart', Quantum.Circuit.Editor.onPointerPress )
-	window.addEventListener(
+	if(!is_readonly){
+		circuitEl.addEventListener( 'mousedown',  Quantum.Circuit.Editor.onPointerPress )
+		circuitEl.addEventListener( 'touchstart', Quantum.Circuit.Editor.onPointerPress )
+		window.addEventListener(
 
-		'Q.Circuit.set$',
-		Quantum.Circuit.Editor.prototype.onExternalSet.bind( this )
-	)
-	window.addEventListener(
+			'Q.Circuit.set$',
+			Quantum.Circuit.Editor.prototype.onExternalSet.bind( this )
+		)
+		window.addEventListener(
 
-		'Q.Circuit.clear$',
-		Quantum.Circuit.Editor.prototype.onExternalClear.bind( this )
-	)
+			'Q.Circuit.clear$',
+			Quantum.Circuit.Editor.prototype.onExternalClear.bind( this )
+		)
+	}
+
 
 
 	//  How can we interact with this circuit
@@ -5255,13 +5258,13 @@ Quantum.Circuit.Editor = function(circuit, targetEl, is_toolbar_hided ) {
 
 //  Augment Q.Circuit to have this functionality.
 
-Quantum.Circuit.toDom = function(circuit, targetEl, is_toolbar_hided ){
+Quantum.Circuit.toDom = function(circuit, targetEl, is_readonly ){
 
-	return new Quantum.Circuit.Editor( circuit, targetEl, is_toolbar_hided ).domElement
+	return new Quantum.Circuit.Editor( circuit, targetEl, is_readonly ).domElement
 }
-Quantum.Circuit.prototype.toDom = function(targetEl, is_toolbar_hided ){
+Quantum.Circuit.prototype.toDom = function(targetEl, is_readonly ){
 
-	return new Quantum.Circuit.Editor( this, targetEl, is_toolbar_hided ).domElement
+	return new Quantum.Circuit.Editor( this, targetEl, is_readonly ).domElement
 }
 
 
@@ -5761,7 +5764,7 @@ Quantum.Circuit.Editor.isValidSwapCandidate = function(circuitEl ){
 	//  Both operations must be “identity cursors.”
 	//  If so, we are good to go.
 
-	areBothCursors = selectedOperations.every( function( operationEl ){
+	const areBothCursors = selectedOperations.every( function( operationEl ){
 
 		return operationEl.getAttribute( 'gate-symbol' ) === Quantum.Gate.CURSOR.symbol
 	})
@@ -5780,7 +5783,7 @@ Quantum.Circuit.Editor.createSwap = function(circuitEl ){
 		selectedOperations = Array
 			.from( circuitEl.querySelectorAll( '.Q-circuit-cell-selected' )),
 		momentIndex = +selectedOperations[ 0 ].getAttribute( 'moment-index' )
-	registerIndices = selectedOperations
+		let registerIndices = selectedOperations
 		.reduce( function( registerIndices, operationEl ){
 
 			registerIndices.push( +operationEl.getAttribute( 'register-index' ))
@@ -6096,7 +6099,7 @@ Quantum.Circuit.Editor.onPointerPress = function(event ){
 	//  because both branches of if( circuitEl ) and if( paletteEl )
 	//  below will have access to this scope.
 
-	dragEl = document.createElement( 'div' )
+	const dragEl = document.createElement( 'div' )
 	dragEl.classList.add( 'Q-circuit-clipboard' )
 	const { x, y } = Quantum.Circuit.Editor.getInteractionCoordinates( event )
 
@@ -6531,9 +6534,8 @@ Quantum.Circuit.Editor.onPointerRelease = function(event ){
 
 		if( Quantum.Circuit.Editor.dragEl.circuitEl ){
 
-			const
-				originCircuitEl = Quantum.Circuit.Editor.dragEl.circuitEl
-			originCircuit = originCircuitEl.circuit
+			const originCircuitEl = Quantum.Circuit.Editor.dragEl.circuitEl
+			let originCircuit = originCircuitEl.circuit
 
 			originCircuit.history.createEntry$()
 			Array
@@ -6583,6 +6585,7 @@ Quantum.Circuit.Editor.onPointerRelease = function(event ){
 
 		}, 500 )
 
+		document.dispatchEvent(new CustomEvent("gateHasBeenOperated"))
 
 		//  No more to do here. Goodbye.
 
@@ -7028,6 +7031,7 @@ Quantum.Circuit.Editor.onPointerRelease = function(event ){
 
 	document.body.removeChild( Quantum.Circuit.Editor.dragEl )
 	Quantum.Circuit.Editor.dragEl = null
+	document.dispatchEvent(new CustomEvent("gateHasBeenOperated"))
 }
 
 
