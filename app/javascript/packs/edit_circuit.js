@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const domEl = document.getElementById('circuit')
     if( domEl ){
         let text = domEl.getAttribute('data-scheme')
-        text = text.replaceAll('!', "\n")
 
         circuit = Quantum(text)
         circuit.name = 'circuit'
@@ -37,5 +36,8 @@ document.addEventListener("gateHasBeenOperated", () => {
 })
 
 document.addEventListener('submit', () => {
-    if( circuit ) document.getElementById('circuit_scheme')[0].value = circuit.toText()
+    if( circuit ){
+        let scheme = document.getElementById('circuit_scheme')
+        if(scheme instanceof HTMLElement) scheme.value = circuit.toText()
+    }
 })
