@@ -6,10 +6,10 @@
       <% end %>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><%= link_to "Home", root_path, class: "nav-link px-2 text-secondary" %></li>
-        <li><%= link_to t('header_nav_private_library'), circuits_path, class: "nav-link px-2 text-white" %></li>
-        <li><%= link_to t('header_nav_published_library'), exhibition_path, class: "nav-link px-2 text-white" %></li>
-        <li><%= link_to t('header_nav_about'), about_path, class: %w"nav-link px-2 text-white" %></li>
+        <li><%= link_to "Home", root_url, class: "nav-link px-2 text-secondary" %></li>
+        <li><%= link_to t('header_nav_private_library'), circuits_url, class: "nav-link px-2 text-white" %></li>
+        <li><%= link_to t('header_nav_published_library'), exhibition_url, class: "nav-link px-2 text-white" %></li>
+        <li><%= link_to t('header_nav_about'), about_url, class: %w"nav-link px-2 text-white" %></li>
       </ul>
 
       <div class="text-end">
@@ -18,12 +18,12 @@
           <label class="dropdown-toggle" id="dropdownUserActions" data-bs-toggle="dropdown" aria-expanded="false"><%= current_user.email %></label>
 
           <ul class="dropdown-menu dropdown-menu-macos mx-0 shadow" aria-labelledby="dropdownUserActions" style="width: 220px;">
-            <li><%= link_to t('logout'), destroy_user_session_path, controller: :session , method: :delete, class: "dropdown-item" %></a></li>
+            <li><%= link_to t('logout'), destroy_user_session_url, controller: :session , method: :delete, class: "dropdown-item" %></a></li>
           </ul>
 
         <% else %>
-          <%= link_to t('login'), new_user_session_path, class: "btn btn-outline-light me-2" %>
-          <%= link_to t('signup'), new_user_registration_path, class: "btn btn-warning" %>
+          <%= link_to t('login'), new_user_session_url, class: "btn btn-outline-light me-2" %>
+          <%= link_to t('signup'), new_user_registration_url, class: "btn btn-warning" %>
         <% end %>
 
       </div>

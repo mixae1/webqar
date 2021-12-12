@@ -1,5 +1,8 @@
 class CircuitsController < ApplicationController
   before_action :authenticate_user!, except: %i[public show]
+  before_action :set_circuit, only: %i[publish unpublish edit destroy]
+  before_action :set_safe_circuit, only: %i[show]
+  before_action :authorize_circuit, only: %i[publish unpublish edit destroy edit update]
   def index
     @private_circuits_list = Circuit.readonly.where(['user_id = ?', current_user.id])
   end
@@ -9,21 +12,22 @@ class CircuitsController < ApplicationController
   end
 
   def new
-
+    @circuit = Circuit.new
   end
 
   def create
-
+    @circuit = current_user.circuits.create(circuit_params)
+    return redirect_to new_circuit_path unless @circuit.valid?
+    redirect_to circuits_path
   end
 
   def publish
-    c = Circuit.find(params[:id])
-    c.published = true
-    c.save
+    @circuit.published = true
+    @circuit.save
   end
 
   def show
-    @circuit = Circuit.readonly.find(params[:id]);
+
   end
 
   def edit
@@ -46,8 +50,27 @@ class CircuitsController < ApplicationController
   end
 
   def unpublish
-    c = Circuit.find(params[:id])
-    c.published = false
-    c.save
+    @circuit.published = false
+    @circuit.save
+  end
+
+  private
+
+  def set_safe_circuit
+    @circuit = Circuit.readonly.find_by_id(params[:id])
+    render_404 unless @circuit
+  end
+
+  def set_circuit
+    @circuit = Circuit.find_by_id(params[:id])
+    render_404 unless @circuit
+  end
+
+  def circuit_params
+    params.require(:circuit).permit(:title, :description, :scheme)
+  end
+
+  def authorize_circuit
+    render_404 unless current_user.id == @circuit.user.id
   end
 end

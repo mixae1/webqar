@@ -10,7 +10,7 @@
 
 
 <% unless @circuit.scheme.empty? %>
-  <div id="circuit" data-scheme="<%= @circuit.scheme %>"></div>
+  <div id="circuit-readonly" data-scheme="<%= @circuit.scheme %>"></div>
   <h5><%= t('result_probabilities') %>:</h5>
   <pre><samp id="circuit-report"></samp></pre>
 <% end %>
