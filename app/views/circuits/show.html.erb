@@ -14,3 +14,17 @@
   <h5><%= t('result_probabilities') %>:</h5>
   <pre><samp id="circuit-report"></samp></pre>
 <% end %>
+
+<% if current_user.id == @circuit.user_id %>
+  <%= form_for @circuit, url: circuit_url(@circuit), method: :put, remote: true do |f| %>
+    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+      <input type="radio" class="btn-check" name="btnradio" id="btnpublic" autocomplete="off" <%= "checked" if @circuit.published %>>
+      <label class="btn btn-outline-primary" for="btnpublic" id="btnpublic_label"><%= t('public') %></label>
+
+      <input type="radio" class="btn-check" name="btnradio" id="btnprivate" autocomplete="off" <%= "checked" unless @circuit.published %>>
+      <label class="btn btn-outline-primary" for="btnprivate" id="btnprivate_label"><%= t('private') %></label>
+    </div>
+    <%= f.hidden_field :published %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <% end %>
+<% end %>

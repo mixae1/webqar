@@ -70,3 +70,7 @@ en:
   description: "Description"
   title: "Title"
   author: "Author"
+  publish: "Publish"
+  unpublish: "Unpublish"
+  public: "Public"
+  private: "Private"

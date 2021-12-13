@@ -15,3 +15,4 @@ ActiveStorage.start()
 
 import './show_circuit'
 import './edit_circuit'
+import './toggle_public_availability'

@@ -12,6 +12,4 @@ Rails.application.routes.draw do
   resources :circuits
 
   get '/exhibition', to: 'circuits#public'
-  post '/circuits/:id/publish', to: 'circuits#publish'
-  post '/circuits/:id/unpublish', to: 'circuits#unpublish'
 end

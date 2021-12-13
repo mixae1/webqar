@@ -1,8 +1,7 @@
 class CircuitsController < ApplicationController
   before_action :authenticate_user!, except: %i[public show]
-  before_action :set_circuit, only: %i[publish unpublish edit destroy]
-  before_action :set_safe_circuit, only: %i[show]
-  before_action :authorize_circuit, only: %i[publish unpublish edit destroy edit update]
+  before_action :set_circuit, only: %i[edit update show destroy]
+  before_action :authorize_circuit, only: %i[edit update destroy]
   def index
     @private_circuits_list = Circuit.readonly.where(['user_id = ?', current_user.id])
   end
@@ -16,14 +15,9 @@ class CircuitsController < ApplicationController
   end
 
   def create
-    @circuit = current_user.circuits.create(circuit_params)
+    @circuit = current_user.circuits.create(circuit_from_params)
     return redirect_to new_circuit_path unless @circuit.valid?
     redirect_to circuits_path
-  end
-
-  def publish
-    @circuit.published = true
-    @circuit.save
   end
 
   def show
@@ -35,13 +29,14 @@ class CircuitsController < ApplicationController
   end
 
   def update
-    case [:method]
-    when :patch
+    case params["_method"]
+    when "patch"
 
-    when :put
-
+    when "put"
+      @circuit.published = circuit_from_params[:published]
+      @circuit.save
     else
-      throw Exception.new
+      render_404
     end
   end
 
@@ -49,28 +44,19 @@ class CircuitsController < ApplicationController
 
   end
 
-  def unpublish
-    @circuit.published = false
-    @circuit.save
-  end
-
   private
 
-  def set_safe_circuit
-    @circuit = Circuit.readonly.find_by_id(params[:id])
-    render_404 unless @circuit
-  end
-
   def set_circuit
-    @circuit = Circuit.find_by_id(params[:id])
+    id = params.require(:id)
+    @circuit = Circuit.find_by_id(id)
     render_404 unless @circuit
   end
 
-  def circuit_params
-    params.require(:circuit).permit(:title, :description, :scheme)
+  def circuit_from_params
+    params.require(:circuit).permit(:title, :description, :scheme, :published)
   end
 
   def authorize_circuit
-    render_404 unless current_user.id == @circuit.user.id
+    render_404 unless current_user.id == @circuit&.user_id
   end
 end
