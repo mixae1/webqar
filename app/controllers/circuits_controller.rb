@@ -1,6 +1,7 @@
 class CircuitsController < ApplicationController
   before_action :authenticate_user!, except: %i[public show]
   before_action :set_circuit, only: %i[edit update show destroy]
+  #before_action :default_scheme, only: %i[new create edit update show]
   before_action :authorize_circuit, only: %i[edit update destroy]
   def index
     @private_circuits_list = Circuit.readonly.where(['user_id = ?', current_user.id])
@@ -29,15 +30,13 @@ class CircuitsController < ApplicationController
   end
 
   def update
-    case params["_method"]
-    when "patch"
+    Circuit.update(@circuit.id, circuit_from_params)
 
-    when "put"
-      @circuit.published = circuit_from_params[:published]
-      @circuit.save
-    else
-      render_404
+    respond_to do |format|
+      format.json { render json: { } }
+      format.any
     end
+
   end
 
   def destroy
@@ -58,5 +57,9 @@ class CircuitsController < ApplicationController
 
   def authorize_circuit
     render_404 unless current_user.id == @circuit&.user_id
+  end
+
+  def default_scheme
+
   end
 end

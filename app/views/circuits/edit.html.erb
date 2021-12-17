@@ -1,0 +1,56 @@
+<h2 class="mb-5">Creating</h2>
+
+<%= form_for @circuit, url: circuit_url(@circuit), remote: true do |f| %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+  <div class="form-floating mb-3">
+    <%= f.text_field :title,
+                     class: "form-control w-auto p-3",
+                     id: "floatingTitle",
+                     autofocus: true,
+                     placeholder: "Title",
+                     value: @circuit.title %>
+    <label for="floatingTitle"><%= t('title') %></label>
+  </div>
+
+  <div class="form-floating mb-5">
+    <%= f.text_area :description,
+                    class: "form-control w-50 p-3",
+                    id: "floatingDescription",
+                    autofocus: true,
+                    placeholder: "Description",
+                    value: @circuit.description %>
+    <label for="floatingDescription"><%= t('description') %></label>
+  </div>
+
+  <div class='Q-circuit-palette'></div>
+  <div id="circuit" data-scheme="<% @circuit.scheme %>"></div>
+
+  <hr>
+
+  <h5><%= t('result_probabilities') %>:</h5>
+  <div class="mb-3">
+    <pre><samp id="circuit-report"></samp></pre>
+  </div>
+
+  <%= f.hidden_field :scheme %>
+  <%= f.hidden_field :published %>
+
+  <hr>
+
+  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio" id="btnpublic" autocomplete="off" <%= "checked" if @circuit.published %>>
+    <label class="btn btn-outline-primary" for="btnpublic" id="btnpublic_label"><%= t('public') %></label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnprivate" autocomplete="off" <%= "checked" unless @circuit.published %>>
+    <label class="btn btn-outline-primary" for="btnprivate" id="btnprivate_label"><%= t('private') %></label>
+  </div>
+
+
+  <div class="d-flex flex-row" style="float: right;">
+    <%= f.submit class: "w-auto btn btn-primary" %>
+    <div class="spinner-border m-auto" role="status" id="spinner" hidden>
+      <span class="sr-only"></span>
+    </div>
+  </div>
+<% end %>

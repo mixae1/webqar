@@ -1,43 +1,63 @@
 import Quantum from "./quantum";
 
-let circuit;
-let reportEl;
-
 document.addEventListener('DOMContentLoaded', () => {
 
     const domEl = document.getElementById('circuit')
-    if( domEl ){
+    if (domEl) {
         let text = domEl.getAttribute('data-scheme')
+        if (text === '') text = "I-I-I-I!I-I-I-I!I-I-I-I";
+        text = text.replaceAll('!', "\n")
 
-        circuit = Quantum(text)
+        const circuit = Quantum(text)
         circuit.name = 'circuit'
         circuit.toDom(domEl, false)
 
 
         Array
-            .from( document.querySelectorAll( '.Q-circuit-palette' ))
-            .forEach( function( el ){
+            .from(document.querySelectorAll('.Q-circuit-palette'))
+            .forEach(function (el) {
 
-                Quantum.Circuit.Editor.createPalette( el )
+                Quantum.Circuit.Editor.createPalette(el)
             })
 
-        reportEl = document.getElementById( 'circuit-report' )
+        const reportEl = document.getElementById('circuit-report')
 
-        if( reportEl ){
+        if (reportEl) {
             circuit.evaluate$()
             reportEl.innerText = circuit.report$()
         }
-    }
-})
 
-document.addEventListener("gateHasBeenOperated", () => {
-    if(circuit) circuit.evaluate$()
-    if(reportEl) reportEl.innerText = circuit.report$()
-})
+        document.addEventListener("gateHasBeenOperated", () => {
+            if (circuit) circuit.evaluate$()
+            if (reportEl) reportEl.innerText = circuit.report$()
+        })
 
-document.addEventListener('submit', () => {
-    if( circuit ){
-        let scheme = document.getElementById('circuit_scheme')
-        if(scheme instanceof HTMLElement) scheme.value = circuit.toText()
+        const
+            toggle_public = document.getElementById('btnpublic_label'),
+            toggle_private = document.getElementById('btnprivate_label'),
+            hidden_published = document.getElementById('circuit_published'),
+            form = document.getElementsByClassName('edit_circuit')[0],
+            spinner = document.getElementById("spinner")
+
+        if (toggle_public && hidden_published && form) toggle_public.addEventListener('click', function () {
+            hidden_published.value = true
+        })
+
+        if (toggle_private && hidden_published && form) toggle_private.addEventListener('click', function () {
+            hidden_published.value = false
+        })
+
+        if (form && spinner) form.addEventListener("submit", () => {
+            spinner.hidden = false
+        })
+
+        if (form) form.addEventListener("ajax:success", (e) => {
+            //const [data, status, xhr] = e.detail;
+        })
+
+
+        if (form) form.addEventListener("ajax:complete", () => {
+            spinner.hidden = true
+        })
     }
 })
