@@ -18,5 +18,10 @@ module Webqar
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+
   end
+
+  ActionView::Base.field_error_proc = Proc.new { |html_tag, _| html_tag }
+
 end
