@@ -36,8 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
             toggle_public = document.getElementById('btnpublic_label'),
             toggle_private = document.getElementById('btnprivate_label'),
             hidden_published = document.getElementById('circuit_published'),
-            form = document.getElementsByClassName('edit_circuit')[0],
+            hidden_scheme = document.getElementById('circuit_scheme'),
+            form = document.getElementsByClassName('edit_circuit')[0] || document.getElementById('new_circuit'),
             spinner = document.getElementById("spinner")
+
+        console.log(form)
 
         if (toggle_public && hidden_published && form) toggle_public.addEventListener('click', function () {
             hidden_published.value = true
@@ -47,8 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
             hidden_published.value = false
         })
 
-        if (form && spinner) form.addEventListener("submit", () => {
-            spinner.hidden = false
+        if (form) form.addEventListener("submit", () => {
+            if(spinner) spinner.hidden = false
+            if(hidden_scheme) hidden_scheme.value = circuit.toText().substr(1)
         })
 
         if (form) form.addEventListener("ajax:success", (e) => {
@@ -57,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         if (form) form.addEventListener("ajax:complete", () => {
-            spinner.hidden = true
+            if(spinner) spinner.hidden = true
         })
     }
 })

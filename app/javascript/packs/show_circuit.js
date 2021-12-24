@@ -25,31 +25,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (toggle_public && hidden_published && form) toggle_public.addEventListener('click', function (e) {
             hidden_published.value = true
-            form.submit()
-            //spinner.hidden = false
-            //e.preventDefault()
+            spinner.hidden = false
+            const response = updateCircuit(form, {
+                'published': true,
+            }).then((response) => {
+                spinner.hidden = true
+                console.log(response)
+                if(response["status"] !== 200) e.preventDefault()
+            })
         })
 
         if (toggle_private && hidden_published && form) toggle_private.addEventListener('click', function (e) {
             hidden_published.value = false
-            form.submit()
-            //spinner.hidden = false
-            //e.preventDefault()
+            spinner.hidden = false
+            updateCircuit(form, {
+                'published': false,
+            }).then((response) => {
+                spinner.hidden = true
+                console.log(response)
+                if(response["status"] !== 200) e.preventDefault()
+            })
         })
-
-        if (form && spinner) form.addEventListener("submit", () => {
-            //spinner.hidden = false
-        })
-
-        if (form) form.addEventListener("ajax:success", (e) => {
-            //const [data, status, xhr] = e.detail;
-        })
-
-
-        if (form && spinner) form.addEventListener("ajax:complete", () => {
-            //spinner.hidden = true
-        })
-
     }
-
 })
+
+function getAuthToken(){
+    return document.getElementById("authenticity_token").value
+}
+
+async function updateCircuit(form, _circuit){
+    const response = await fetch(form.action, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': getAuthToken(),
+        },
+        body: JSON.stringify({
+            _method: "patch",
+            authenticity_token: getAuthToken(),
+            circuit: _circuit
+        })
+
+    })
+    return await response
+}
