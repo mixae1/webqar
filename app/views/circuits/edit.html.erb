@@ -24,33 +24,33 @@
   </div>
 
   <div class='Q-circuit-palette'></div>
-  <div id="circuit" data-scheme="<% @circuit.scheme %>"></div>
+  <div id="circuit" data-scheme="<%= @circuit.scheme %>"></div>
 
   <hr>
 
   <h5><%= t('result_probabilities') %>:</h5>
-  <div class="mb-3">
-    <pre><samp id="circuit-report"></samp></pre>
-  </div>
+  <pre class="probabilities-scroll w-50"><samp id="circuit-report"></samp></pre>
 
   <%= f.hidden_field :scheme %>
   <%= f.hidden_field :published %>
 
   <hr>
 
-  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-    <input type="radio" class="btn-check" name="btnradio" id="btnpublic" autocomplete="off" <%= "checked" if @circuit.published %>>
-    <label class="btn btn-outline-primary" for="btnpublic" id="btnpublic_label"><%= t('public') %></label>
+  <div class="d-flex flex-wrap justify-content-between align-items-center">
+    <div class="btn-group m-3" role="group" aria-label="Basic radio toggle button group">
+      <input type="radio" class="btn-check" name="btnradio" id="btnpublic" autocomplete="off" <%= "checked" if @circuit.published %>>
+      <label class="btn btn-outline-primary" for="btnpublic" id="btnpublic_label"><%= t('public') %></label>
 
-    <input type="radio" class="btn-check" name="btnradio" id="btnprivate" autocomplete="off" <%= "checked" unless @circuit.published %>>
-    <label class="btn btn-outline-primary" for="btnprivate" id="btnprivate_label"><%= t('private') %></label>
-  </div>
-
-
-  <div class="d-flex flex-row" style="float: right;">
-    <div class="spinner-border m-auto me-3" role="status" id="spinner" hidden>
-      <span class="sr-only"></span>
+      <input type="radio" class="btn-check" name="btnradio" id="btnprivate" autocomplete="off" <%= "checked" unless @circuit.published %>>
+      <label class="btn btn-outline-primary" for="btnprivate" id="btnprivate_label"><%= t('private') %></label>
     </div>
-    <%= f.submit class: "w-auto btn btn-primary" %>
+
+
+    <div class="d-flex m-3">
+      <div class="spinner-border m-auto me-3" role="status" id="spinner" hidden>
+        <span class="sr-only"></span>
+      </div>
+      <%= f.submit class: "w-auto btn btn-primary" %>
+    </div>
   </div>
 <% end %>

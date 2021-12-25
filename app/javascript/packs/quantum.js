@@ -4656,7 +4656,7 @@ print(task.result().measurement_counts)`
 
 
 		this.fillEmptyOperations$()
-		return thiis
+		return this
 	},
 
 
@@ -5062,7 +5062,7 @@ Quantum.Circuit.Editor = function(circuit, targetEl, is_readonly ) {
 	const boardContainerEl = createDiv()
 	circuitEl.appendChild( boardContainerEl )
 	boardContainerEl.classList.add( 'Q-circuit-board-container' )
-	boardContainerEl.classList.add( 'no-scrolls' )
+	//boardContainerEl.classList.add( 'no-scrolls' )
 	//boardContainerEl.addEventListener( 'touchstart', Q.Circuit.Editor.onPointerPress )
 	boardContainerEl.addEventListener( 'mouseleave', function(){
 
@@ -5149,12 +5149,14 @@ Quantum.Circuit.Editor = function(circuit, targetEl, is_readonly ) {
 
 	//  Add “Add register” button.
 
-	const addRegisterEl = createDiv()
-	foregroundEl.appendChild( addRegisterEl )
-	addRegisterEl.classList.add( 'Q-circuit-header', 'Q-circuit-register-add' )
-	addRegisterEl.setAttribute( 'title', 'Add register' )
-	addRegisterEl.style.gridRowStart = Quantum.Circuit.Editor.registerIndexToGridRow( circuit.bandwidth + 1 )
-	addRegisterEl.innerText = '+'
+	if(!is_readonly && circuit.bandwidth < 10) {
+		const addRegisterEl = createDiv()
+		foregroundEl.appendChild( addRegisterEl )
+		addRegisterEl.classList.add( 'Q-circuit-header', 'Q-circuit-register-add' )
+		addRegisterEl.setAttribute( 'title', 'Add register' )
+		addRegisterEl.style.gridRowStart = Quantum.Circuit.Editor.registerIndexToGridRow( circuit.bandwidth + 1 )
+		addRegisterEl.innerText = '+'
+	}
 
 
 	//  Add moment index symbols to top row.
@@ -5175,14 +5177,14 @@ Quantum.Circuit.Editor = function(circuit, targetEl, is_readonly ) {
 
 
 	//  Add “Add moment” button.
-
-	const addMomentEl = createDiv()
-	foregroundEl.appendChild( addMomentEl )
-	addMomentEl.classList.add( 'Q-circuit-header', 'Q-circuit-moment-add' )
-	addMomentEl.setAttribute( 'title', 'Add moment' )
-	addMomentEl.style.gridColumnStart = Quantum.Circuit.Editor.momentIndexToGridColumn( circuit.timewidth + 1 )
-	addMomentEl.innerText = '+'
-
+	if(!is_readonly && circuit.timewidth < 20) {
+		const addMomentEl = createDiv()
+		foregroundEl.appendChild(addMomentEl)
+		addMomentEl.classList.add('Q-circuit-header', 'Q-circuit-moment-add')
+		addMomentEl.setAttribute('title', 'Add moment')
+		addMomentEl.style.gridColumnStart = Quantum.Circuit.Editor.momentIndexToGridColumn(circuit.timewidth + 1)
+		addMomentEl.innerText = '+'
+	}
 
 	//  Add input values.
 
@@ -6204,8 +6206,8 @@ Quantum.Circuit.Editor.onPointerPress = function(event ){
 		}
 		if( controlEl ) Quantum.Circuit.Editor.createControl( circuitEl )
 		if( swapEl ) Quantum.Circuit.Editor.createSwap( circuitEl )
-		if( addMomentEl   ) console.log( '→ Add moment' )
-		if( addRegisterEl ) console.log( '→ Add register' )
+		if( addMomentEl   ) document.dispatchEvent(new CustomEvent("addMoment"))
+		if( addRegisterEl ) document.dispatchEvent(new CustomEvent("addRegister"))
 
 
 		//  We’re done dealing with external buttons.

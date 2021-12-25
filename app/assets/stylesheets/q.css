@@ -725,8 +725,8 @@ dd .maths {
 	margin: 0 0 2rem 0;
 	margin: 0;
 	width:  100%;
-	max-height: 60vh;
-	overflow: scroll;
+	max-height: 40vh;
+	overflow-y: auto;
 }
 .Q-circuit-board {
 
@@ -918,7 +918,7 @@ dd .maths {
 .Q-circuit-moment-add,
 .Q-circuit-register-add {
 
-	display: none;
+	/*display: none;*/
 }
 .Q-circuit-selectall,
 .Q-circuit-moment-label,

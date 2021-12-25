@@ -5,3 +5,9 @@
 .no-scrolls {
     overflow: hidden!important
 }
+
+.probabilities-scroll{
+    max-height:500px;
+    max-width: 50%;
+    overflow:auto;
+}

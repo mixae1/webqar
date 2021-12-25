@@ -8,10 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (text === '') text = "I-I-I-I!I-I-I-I!I-I-I-I";
         text = text.replaceAll('!', "\n")
 
-        const circuit = Quantum(text)
+        let circuit = Quantum(text)
         circuit.name = 'circuit'
         circuit.toDom(domEl, false)
-
 
         Array
             .from(document.querySelectorAll('.Q-circuit-palette'))
@@ -20,17 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 Quantum.Circuit.Editor.createPalette(el)
             })
 
-        const reportEl = document.getElementById('circuit-report')
-
-        if (reportEl) {
-            circuit.evaluate$()
-            reportEl.innerText = circuit.report$()
-        }
-
-        document.addEventListener("gateHasBeenOperated", () => {
+        window.addEventListener("Q gui altered circuit", () => {
             if (circuit) circuit.evaluate$()
+        })
+
+        window.addEventListener( 'Q.Circuit.evaluate completed', function( event ){
             if (reportEl) reportEl.innerText = circuit.report$()
         })
+
+        const reportEl = document.getElementById('circuit-report')
+        if (reportEl) {
+            if(circuit) circuit.evaluate$()
+        }
 
         const
             toggle_public = document.getElementById('btnpublic_label'),
@@ -39,8 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
             hidden_scheme = document.getElementById('circuit_scheme'),
             form = document.getElementsByClassName('edit_circuit')[0] || document.getElementById('new_circuit'),
             spinner = document.getElementById("spinner")
-
-        console.log(form)
 
         if (toggle_public && hidden_published && form) toggle_public.addEventListener('click', function () {
             hidden_published.value = true
@@ -62,6 +60,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (form) form.addEventListener("ajax:complete", () => {
             if(spinner) spinner.hidden = true
+        })
+
+        function redrawCircuit(){
+            if(circuit){
+                while( domEl.lastChild ){
+
+                    domEl.removeChild( domEl.lastChild )
+                }
+                circuit.toDom(domEl, false)
+            }
+        }
+
+        document.addEventListener("addMoment", () => {
+            text = circuit.toText().substr(1)
+            text = text.replaceAll('\n', '-I\n')
+            if(!text.match(/\n$/)){
+                text += "-I"
+            }
+            circuit = Quantum.Circuit.fromText(text)
+            redrawCircuit()
+        })
+
+        document.addEventListener("addRegister", () => {
+            circuit.bandwidth++
+            circuit.qubits.push( Quantum.Qubit.HORIZONTAL )
+            redrawCircuit()
         })
     }
 })
